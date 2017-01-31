@@ -1,7 +1,5 @@
 <?php
-// Emails form data to you and the person submitting the form and adds it to a database
 
-// Test for db
 $db = new mysqli("DB_HOST","DB_USER","DB_PASSWORD","DB_NAME");
 $sql = "SELECT id FROM form_submissions";
 $result = $db->query($sql);
@@ -17,20 +15,20 @@ if (empty($result)) {
 		 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
 		$result = $db->query($sql);
 }
-// Set your email below
-$myemail = "saurabh.salunkhe81@gmail.com"; // Replace with your email
 
-// Receive and sanitize input
+$myemail = "saurabh.salunkhe81@gmail.com";
+
+
 $name = mysqli_real_escape_string($db, $_POST['name']);
 $email = mysqli_real_escape_string($db, $_POST['email']);
 $phone = mysqli_real_escape_string($db, $_POST['phone']);
 $message = mysqli_real_escape_string($db, $_POST['message']);
 
-// write to db
+
 $sql = "INSERT INTO form_submissions (name,phone,email,message) VALUES ('$name','$phone','$email','$message')";
 $result = $db->query($sql);
 
-// set up email
+
 $msg = "New contact form submission!\nName: " . $name . "\nEmail: " . $email . "\nPhone: " . $phone . "\nEmail: " . $email;
 $msg = wordwrap($msg,70);
 mail($myemail,"New Form Submission",$msg);
